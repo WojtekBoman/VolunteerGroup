@@ -3,14 +3,17 @@ package ztw.bs5.PsiPatrol.Entities;
 import ztw.bs5.PsiPatrol.Entities.Enums.Stopien;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "wolontariusz", schema = "psipatrol", catalog = "")
-public class Wolontariusz {
+public class Wolontariusz implements Serializable {
     private Stopien stopien;
     private double procentowaAktywnosc;
-    private String uzytkownikEmail;
+    private Uzytkownik uzytkownikEmail;
+    private List<Wydarzenie> wydarzenia;
 
     @Basic
     @Enumerated(EnumType.STRING)
@@ -34,13 +37,27 @@ public class Wolontariusz {
     }
 
     @Id
-    @Column(name = "uzytkownikEmail", nullable = false, length = 50)
-    public String getUzytkownikEmail() {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "uzytkownikEmail", nullable = false)
+    public Uzytkownik getUzytkownikEmail() {
         return uzytkownikEmail;
     }
 
-    public void setUzytkownikEmail(String uzytkownikEmail) {
+    public void setUzytkownikEmail(Uzytkownik uzytkownikEmail) {
         this.uzytkownikEmail = uzytkownikEmail;
+    }
+
+    @ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name="Udzial",
+            joinColumns=@JoinColumn(name="emailUzytkownika"),
+            inverseJoinColumns=@JoinColumn(name="idZdarzenia"))
+    public List<Wydarzenie> getWydarzenia() {
+        return wydarzenia;
+    }
+
+    public void setWydarzenia(List<Wydarzenie> wydarzenia) {
+        this.wydarzenia = wydarzenia;
     }
 
     @Override

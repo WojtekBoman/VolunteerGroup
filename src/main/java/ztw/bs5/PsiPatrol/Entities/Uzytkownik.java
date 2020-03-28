@@ -2,6 +2,7 @@ package ztw.bs5.PsiPatrol.Entities;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "uzytkownik", schema = "psipatrol", catalog = "")
@@ -10,6 +11,12 @@ public class Uzytkownik {
     private String haslo;
     private String imie;
     private String nazwisko;
+    private Przewodniczacy przewodniczacy;
+    private Wolontariusz wolontariusz;
+    private Pracownikschroniska pracownikschroniska;
+    private Set<Wiadomosc> maileAdresata;
+    private Set<Wiadomosc> maileNadawcy;
+
 
     @Id
     @Column(name = "email", nullable = false, length = 50)
@@ -49,6 +56,59 @@ public class Uzytkownik {
 
     public void setNazwisko(String nazwisko) {
         this.nazwisko = nazwisko;
+    }
+
+    @OneToOne(mappedBy="uzytkownikEmail",
+            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+                    CascadeType.REFRESH})
+    public Przewodniczacy getPrzewodniczacy() {
+        return przewodniczacy;
+    }
+
+    public void setPrzewodniczacy(Przewodniczacy przewodniczacy) {
+        this.przewodniczacy = przewodniczacy;
+    }
+
+    @OneToOne(mappedBy="uzytkownikEmail",
+            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+                    CascadeType.REFRESH})
+    public Wolontariusz getWolontariusz() {
+        return wolontariusz;
+    }
+
+    public void setWolontariusz(Wolontariusz wolontariusz) {
+        this.wolontariusz = wolontariusz;
+    }
+
+    @OneToOne(mappedBy="uzytkownikEmail",
+            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+                    CascadeType.REFRESH})
+    public Pracownikschroniska getPracownikschroniska() {
+        return pracownikschroniska;
+    }
+
+    public void setPracownikschroniska(Pracownikschroniska pracownikschroniska) {
+        this.pracownikschroniska = pracownikschroniska;
+    }
+
+    @OneToMany(mappedBy = "emailAdresata", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.REFRESH})
+    public Set<Wiadomosc> getMaileAdresata() {
+        return maileAdresata;
+    }
+
+    public void setMaileAdresata(Set<Wiadomosc> maileAdresata) {
+        this.maileAdresata = maileAdresata;
+    }
+
+    @OneToMany(mappedBy = "emailNadawcy", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.REFRESH})
+    public Set<Wiadomosc> getMaileNadawcy() {
+        return maileNadawcy;
+    }
+
+    public void setMaileNadawcy(Set<Wiadomosc> maileNadawcy) {
+        this.maileNadawcy = maileNadawcy;
     }
 
     @Override

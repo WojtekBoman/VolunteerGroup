@@ -10,7 +10,7 @@ public class Oferta {
     private String tytul;
     private String opis;
     private String imie;
-    private String idPracownika;
+    private Pracownikschroniska idPracownika;
 
     @Id
     @Column(name = "idOferty", nullable = false)
@@ -52,13 +52,15 @@ public class Oferta {
         this.imie = imie;
     }
 
-    @Basic
-    @Column(name = "idPracownika", nullable = false, length = 50)
-    public String getIdPracownika() {
-        return idPracownika;
-    }
+//    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+//            CascadeType.DETACH, CascadeType.REFRESH})
+//    @JoinColumns({
+//    @JoinColumn(name = "idPracownika", nullable = false)})
+//    public Pracownikschroniska getIdPracownika() {
+//        return idPracownika;
+//    }
 
-    public void setIdPracownika(String idPracownika) {
+    public void setIdPracownika(Pracownikschroniska idPracownika) {
         this.idPracownika = idPracownika;
     }
 

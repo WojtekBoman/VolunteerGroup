@@ -7,8 +7,8 @@ import java.util.Objects;
 @Table(name = "wiadomosc", schema = "psipatrol", catalog = "")
 public class Wiadomosc {
     private int idWiadomosci;
-    private String emailAdresata;
-    private String emailNadawcy;
+    private Uzytkownik emailAdresata;
+    private Uzytkownik emailNadawcy;
     private String trescWiadomosci;
 
     @Id
@@ -21,23 +21,26 @@ public class Wiadomosc {
         this.idWiadomosci = idWiadomosci;
     }
 
-    @Basic
-    @Column(name = "emailAdresata", nullable = false, length = 50)
-    public String getEmailAdresata() {
+
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "emailAdresata", nullable = false)
+    public Uzytkownik getEmailAdresata() {
         return emailAdresata;
     }
 
-    public void setEmailAdresata(String emailAdresata) {
+    public void setEmailAdresata(Uzytkownik emailAdresata) {
         this.emailAdresata = emailAdresata;
     }
 
-    @Basic
-    @Column(name = "emailNadawcy", nullable = false, length = 50)
-    public String getEmailNadawcy() {
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "emailNadawcy", nullable = false)
+    public Uzytkownik getEmailNadawcy() {
         return emailNadawcy;
     }
 
-    public void setEmailNadawcy(String emailNadawcy) {
+    public void setEmailNadawcy(Uzytkownik emailNadawcy) {
         this.emailNadawcy = emailNadawcy;
     }
 

@@ -4,6 +4,8 @@ import ztw.bs5.PsiPatrol.Entities.Enums.Kategoria;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,7 +16,8 @@ public class Wydarzenie {
     private int liczbaPotrzebnychWolontariuszy;
     private Kategoria kategoria;
     private Date dataRozpoczecia;
-    private String idTworcy;
+    private Przewodniczacy idTworcy;
+    private List<Wolontariusz> wolontariusze;
 
     @Id
     @Column(name = "idZdarzenia", nullable = false)
@@ -67,14 +70,38 @@ public class Wydarzenie {
         this.dataRozpoczecia = dataRozpoczecia;
     }
 
-    @Basic
-    @Column(name = "idTworcy", nullable = false, length = 50)
-    public String getIdTworcy() {
+
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="idTworcy", nullable = false)
+    public Przewodniczacy getIdTworcy() {
         return idTworcy;
     }
 
-    public void setIdTworcy(String idTworcy) {
+    public void setIdTworcy(Przewodniczacy idTworcy) {
         this.idTworcy = idTworcy;
+    }
+
+
+    @ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH,},fetch = FetchType.EAGER)
+    @JoinTable(name="Udzial",
+            joinColumns=@JoinColumn(name="idZdarzenia"),
+            inverseJoinColumns=@JoinColumn(name="emailUzytkownika"))
+    public List<Wolontariusz> getWolontariusze() {
+        return wolontariusze;
+    }
+
+    public void setWolontariusze(List<Wolontariusz> wolontariusze) {
+        this.wolontariusze = wolontariusze;
+    }
+
+    public void addWolontariusz(Wolontariusz wolontariusz) {
+        if (wolontariusze==null) {
+            wolontariusze = new ArrayList<>();
+        }
+
+        wolontariusze.add(wolontariusz);
     }
 
     @Override
@@ -90,8 +117,12 @@ public class Wydarzenie {
                 Objects.equals(idTworcy, that.idTworcy);
     }
 
+
+
     @Override
     public int hashCode() {
         return Objects.hash(idZdarzenia, nazwa, liczbaPotrzebnychWolontariuszy, kategoria, dataRozpoczecia, idTworcy);
     }
+
+
 }

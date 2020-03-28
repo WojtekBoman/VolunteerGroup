@@ -14,7 +14,7 @@ public class Zbiorka {
     private Date dataZakonczenia;
     private double kwotaPotrzebna;
     private double kwotaZebrana;
-    private String idPracownika;
+    private Pracownikschroniska idPracownika;
 
     @Id
     @Column(name = "idZbiorki", nullable = false)
@@ -86,13 +86,15 @@ public class Zbiorka {
         this.kwotaZebrana = kwotaZebrana;
     }
 
-    @Basic
-    @Column(name = "idPracownika", nullable = false, length = 50)
-    public String getIdPracownika() {
+
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "idPracownika", nullable = false)
+    public Pracownikschroniska getIdPracownika() {
         return idPracownika;
     }
 
-    public void setIdPracownika(String idPracownika) {
+    public void setIdPracownika(Pracownikschroniska idPracownika) {
         this.idPracownika = idPracownika;
     }
 
