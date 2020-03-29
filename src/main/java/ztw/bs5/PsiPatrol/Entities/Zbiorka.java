@@ -9,6 +9,7 @@ import java.util.Objects;
 public class Zbiorka {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_zbiorki", nullable = false)
     private int idZbiorki;
 

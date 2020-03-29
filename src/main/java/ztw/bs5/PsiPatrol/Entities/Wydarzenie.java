@@ -26,6 +26,7 @@ public class Wydarzenie {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_zdarzenia", nullable = false)
     private int idZdarzenia;
 

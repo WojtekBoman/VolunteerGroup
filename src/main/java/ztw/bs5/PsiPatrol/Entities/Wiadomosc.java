@@ -8,6 +8,7 @@ import java.util.Objects;
 public class Wiadomosc {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_wiadomosci", nullable = false)
     private int idWiadomosci;
 

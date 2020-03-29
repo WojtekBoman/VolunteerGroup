@@ -6,11 +6,16 @@ import ztw.bs5.PsiPatrol.Entities.Uzytkownik;
 import ztw.bs5.PsiPatrol.Entities.Wydarzenie;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Repository
 public interface UzytkownikRepository extends JpaRepository<Uzytkownik, String> {
 
-public Uzytkownik findUzytkownikByEmail(String email);
+    Uzytkownik findUzytkownikByEmail(String email);
+
+    Optional<Uzytkownik> findByEmail(String email);
+    Boolean existsByEmail(String email);
+
 
 
 }

@@ -1,11 +1,13 @@
 package ztw.bs5.PsiPatrol.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ztw.bs5.PsiPatrol.Entities.Uzytkownik;
 import ztw.bs5.PsiPatrol.Repositories.UzytkownikRepository;
 
 import java.util.List;
 
+@Service
 public class UzytkownikServiceImpl implements UzytkownikService {
 
 

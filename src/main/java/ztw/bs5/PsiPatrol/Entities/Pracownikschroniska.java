@@ -18,9 +18,9 @@ public class Pracownikschroniska implements Serializable {
     @JoinColumn(name = "uzytkownik_email", nullable = false)
     private Uzytkownik uzytkownikEmail;
 
-//    @OneToMany(mappedBy = "idPracownika", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
-//            CascadeType.REFRESH})
-//    private Set<Oferta> oferta;
+    @OneToMany(mappedBy = "idPracownika", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.REFRESH})
+    private Set<Oferta> oferta;
 
     @OneToMany(mappedBy = "idPracownika", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
             CascadeType.REFRESH})
@@ -46,13 +46,13 @@ public class Pracownikschroniska implements Serializable {
 
 
 
-//    public Set<Oferta> getOferta() {
-//        return oferta;
-//    }
-//
-//    public void setOferta(Set<Oferta> oferta) {
-//        this.oferta = oferta;
-//    }
+    public Set<Oferta> getOferta() {
+        return oferta;
+    }
+
+    public void setOferta(Set<Oferta> oferta) {
+        this.oferta = oferta;
+    }
 
 
     public Set<Zbiorka> getZbiorka() {
