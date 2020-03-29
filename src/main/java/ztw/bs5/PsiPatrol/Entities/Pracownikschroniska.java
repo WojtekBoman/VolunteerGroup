@@ -8,13 +8,25 @@ import java.util.Set;
 @Entity
 @Table(name = "pracownikschroniska", schema = "psipatrol", catalog = "")
 public class Pracownikschroniska implements Serializable {
-    private String nazwaSchroniska;
-    private Uzytkownik uzytkownikEmail;
-    private Set<Oferta> oferta;
-    private Set<Zbiorka> zbiorka;
 
     @Basic
-    @Column(name = "nazwaSchroniska", nullable = false, length = 50)
+    @Column(name = "nazwa_schroniska", nullable = false, length = 50)
+    private String nazwaSchroniska;
+
+    @Id
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "uzytkownik_email", nullable = false)
+    private Uzytkownik uzytkownikEmail;
+
+//    @OneToMany(mappedBy = "idPracownika", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+//            CascadeType.REFRESH})
+//    private Set<Oferta> oferta;
+
+    @OneToMany(mappedBy = "idPracownika", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.REFRESH})
+    private Set<Zbiorka> zbiorka;
+
+
     public String getNazwaSchroniska() {
         return nazwaSchroniska;
     }
@@ -23,9 +35,7 @@ public class Pracownikschroniska implements Serializable {
         this.nazwaSchroniska = nazwaSchroniska;
     }
 
-    @Id
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "uzytkownikEmail", nullable = false)
+
     public Uzytkownik getUzytkownikEmail() {
         return uzytkownikEmail;
     }
@@ -35,18 +45,16 @@ public class Pracownikschroniska implements Serializable {
     }
 
 
-//    @OneToMany(mappedBy = "idPracownika", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
-//            CascadeType.REFRESH})
+
 //    public Set<Oferta> getOferta() {
 //        return oferta;
 //    }
+//
+//    public void setOferta(Set<Oferta> oferta) {
+//        this.oferta = oferta;
+//    }
 
-    public void setOferta(Set<Oferta> oferta) {
-        this.oferta = oferta;
-    }
 
-    @OneToMany(mappedBy = "idPracownika", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
-            CascadeType.REFRESH})
     public Set<Zbiorka> getZbiorka() {
         return zbiorka;
     }

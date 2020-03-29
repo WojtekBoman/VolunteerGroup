@@ -1,7 +1,5 @@
 package ztw.bs5.PsiPatrol.Entities;
 
-import ztw.bs5.PsiPatrol.Entities.Enums.Stopien;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -10,14 +8,41 @@ import java.util.Objects;
 @Entity
 @Table(name = "wolontariusz", schema = "psipatrol", catalog = "")
 public class Wolontariusz implements Serializable {
-    private Stopien stopien;
-    private double procentowaAktywnosc;
-    private Uzytkownik uzytkownikEmail;
-    private List<Wydarzenie> wydarzenia;
+
+    public enum Stopien {
+        Amator("Amator"),
+        Zawodowiec("Zawodowiec"),
+        KlasaSwiatowa("KlasaSwiatowa");
+
+        private String value;
+
+        Stopien(String value){this.value = value;}
+
+        public String getValue() {return value;}
+    }
 
     @Basic
     @Enumerated(EnumType.STRING)
     @Column(name = "stopien", nullable = false)
+    private Stopien stopien;
+
+    @Basic
+    @Column(name = "procentowa_aktywnosc", nullable = false, precision = 0)
+    private double procentowaAktywnosc;
+
+    @Id
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "uzytkownik_email", nullable = false)
+    private Uzytkownik uzytkownikEmail;
+
+    @ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name="Udzial",
+            joinColumns=@JoinColumn(name="email_uzytkownika"),
+            inverseJoinColumns=@JoinColumn(name="id_zdarzenia"))
+    private List<Wydarzenie> wydarzenia;
+
+
     public Stopien getStopien() {
         return stopien;
     }
@@ -26,8 +51,7 @@ public class Wolontariusz implements Serializable {
         this.stopien = stopien;
     }
 
-    @Basic
-    @Column(name = "procentowaAktywnosc", nullable = false, precision = 0)
+
     public double getProcentowaAktywnosc() {
         return procentowaAktywnosc;
     }
@@ -36,9 +60,7 @@ public class Wolontariusz implements Serializable {
         this.procentowaAktywnosc = procentowaAktywnosc;
     }
 
-    @Id
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "uzytkownikEmail", nullable = false)
+
     public Uzytkownik getUzytkownikEmail() {
         return uzytkownikEmail;
     }
@@ -47,11 +69,7 @@ public class Wolontariusz implements Serializable {
         this.uzytkownikEmail = uzytkownikEmail;
     }
 
-    @ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinTable(name="Udzial",
-            joinColumns=@JoinColumn(name="emailUzytkownika"),
-            inverseJoinColumns=@JoinColumn(name="idZdarzenia"))
+
     public List<Wydarzenie> getWydarzenia() {
         return wydarzenia;
     }

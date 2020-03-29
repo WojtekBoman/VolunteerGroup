@@ -8,12 +8,20 @@ import java.util.Set;
 @Entity
 @Table(name = "przewodniczacy", schema = "psipatrol", catalog = "")
 public class Przewodniczacy implements Serializable {
-    private int liczbaZorganizowanychWyd;
-    private Uzytkownik uzytkownikEmail;
-    private Set<Wydarzenie> wydarzenia;
 
     @Basic
-    @Column(name = "liczbaZorganizowanychWyd", nullable = false)
+    @Column(name = "liczba_zorganizowanych_wyd", nullable = false)
+    private int liczbaZorganizowanychWyd;
+
+    @Id
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "uzytkownik_email", nullable = false)
+    private Uzytkownik uzytkownikEmail;
+
+    @OneToMany(mappedBy = "idTworcy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Wydarzenie> wydarzenia;
+
+
     public int getLiczbaZorganizowanychWyd() {
         return liczbaZorganizowanychWyd;
     }
@@ -22,9 +30,7 @@ public class Przewodniczacy implements Serializable {
         this.liczbaZorganizowanychWyd = liczbaZorganizowanychWyd;
     }
 
-    @Id
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "uzytkownikEmail", nullable = false)
+
     public Uzytkownik getUzytkownikEmail() {
         return uzytkownikEmail;
     }
@@ -33,8 +39,7 @@ public class Przewodniczacy implements Serializable {
         this.uzytkownikEmail = uzytkownikEmail;
     }
 
-    @OneToMany(mappedBy = "idTworcy", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
-            CascadeType.REFRESH})
+
     public Set<Wydarzenie> getWydarzenia() {
         return wydarzenia;
     }

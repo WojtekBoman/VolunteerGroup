@@ -7,17 +7,41 @@ import java.util.Objects;
 @Entity
 @Table(name = "zbiorka", schema = "psipatrol", catalog = "")
 public class Zbiorka {
-    private int idZbiorki;
-    private String tytul;
-    private String opis;
-    private Date dataRozpoczecia;
-    private Date dataZakonczenia;
-    private double kwotaPotrzebna;
-    private double kwotaZebrana;
-    private Pracownikschroniska idPracownika;
 
     @Id
-    @Column(name = "idZbiorki", nullable = false)
+    @Column(name = "id_zbiorki", nullable = false)
+    private int idZbiorki;
+
+    @Basic
+    @Column(name = "tytul", nullable = false, length = 50)
+    private String tytul;
+
+    @Basic
+    @Column(name = "opis", nullable = false, length = 255)
+    private String opis;
+
+    @Basic
+    @Column(name = "data_rozpoczecia", nullable = false)
+    private Date dataRozpoczecia;
+
+    @Basic
+    @Column(name = "data_zakonczenia", nullable = false)
+    private Date dataZakonczenia;
+
+    @Basic
+    @Column(name = "kwota_potrzebna", nullable = false, precision = 0)
+    private double kwotaPotrzebna;
+
+    @Basic
+    @Column(name = "kwota_zebrana", nullable = false, precision = 0)
+    private double kwotaZebrana;
+
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "id_pracownika", nullable = false)
+    private Pracownikschroniska idPracownika;
+
+
     public int getIdZbiorki() {
         return idZbiorki;
     }
@@ -26,8 +50,7 @@ public class Zbiorka {
         this.idZbiorki = idZbiorki;
     }
 
-    @Basic
-    @Column(name = "tytul", nullable = false, length = 50)
+
     public String getTytul() {
         return tytul;
     }
@@ -36,8 +59,7 @@ public class Zbiorka {
         this.tytul = tytul;
     }
 
-    @Basic
-    @Column(name = "opis", nullable = false, length = 255)
+
     public String getOpis() {
         return opis;
     }
@@ -46,8 +68,7 @@ public class Zbiorka {
         this.opis = opis;
     }
 
-    @Basic
-    @Column(name = "dataRozpoczecia", nullable = false)
+
     public Date getDataRozpoczecia() {
         return dataRozpoczecia;
     }
@@ -56,8 +77,7 @@ public class Zbiorka {
         this.dataRozpoczecia = dataRozpoczecia;
     }
 
-    @Basic
-    @Column(name = "dataZakonczenia", nullable = false)
+
     public Date getDataZakonczenia() {
         return dataZakonczenia;
     }
@@ -66,8 +86,7 @@ public class Zbiorka {
         this.dataZakonczenia = dataZakonczenia;
     }
 
-    @Basic
-    @Column(name = "kwotaPotrzebna", nullable = false, precision = 0)
+
     public double getKwotaPotrzebna() {
         return kwotaPotrzebna;
     }
@@ -76,8 +95,7 @@ public class Zbiorka {
         this.kwotaPotrzebna = kwotaPotrzebna;
     }
 
-    @Basic
-    @Column(name = "kwotaZebrana", nullable = false, precision = 0)
+
     public double getKwotaZebrana() {
         return kwotaZebrana;
     }
@@ -87,9 +105,6 @@ public class Zbiorka {
     }
 
 
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "idPracownika", nullable = false)
     public Pracownikschroniska getIdPracownika() {
         return idPracownika;
     }

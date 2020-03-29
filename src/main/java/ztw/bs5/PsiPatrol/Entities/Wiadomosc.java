@@ -6,13 +6,26 @@ import java.util.Objects;
 @Entity
 @Table(name = "wiadomosc", schema = "psipatrol", catalog = "")
 public class Wiadomosc {
-    private int idWiadomosci;
-    private Uzytkownik emailAdresata;
-    private Uzytkownik emailNadawcy;
-    private String trescWiadomosci;
 
     @Id
-    @Column(name = "idWiadomosci", nullable = false)
+    @Column(name = "id_wiadomosci", nullable = false)
+    private int idWiadomosci;
+
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "email_adresata", nullable = false)
+    private Uzytkownik emailAdresata;
+
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "email_nadawcy", nullable = false)
+    private Uzytkownik emailNadawcy;
+
+    @Basic
+    @Column(name = "tresc_wiadomosci", nullable = false, length = 255)
+    private String trescWiadomosci;
+
+
     public int getIdWiadomosci() {
         return idWiadomosci;
     }
@@ -22,9 +35,7 @@ public class Wiadomosc {
     }
 
 
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "emailAdresata", nullable = false)
+
     public Uzytkownik getEmailAdresata() {
         return emailAdresata;
     }
@@ -33,9 +44,7 @@ public class Wiadomosc {
         this.emailAdresata = emailAdresata;
     }
 
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "emailNadawcy", nullable = false)
+
     public Uzytkownik getEmailNadawcy() {
         return emailNadawcy;
     }
@@ -44,8 +53,7 @@ public class Wiadomosc {
         this.emailNadawcy = emailNadawcy;
     }
 
-    @Basic
-    @Column(name = "trescWiadomosci", nullable = false, length = 255)
+
     public String getTrescWiadomosci() {
         return trescWiadomosci;
     }

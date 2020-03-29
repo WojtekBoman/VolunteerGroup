@@ -1,25 +1,62 @@
 package ztw.bs5.PsiPatrol.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "uzytkownik", schema = "psipatrol", catalog = "")
-public class Uzytkownik {
-    private String email;
-    private String haslo;
-    private String imie;
-    private String nazwisko;
-    private Przewodniczacy przewodniczacy;
-    private Wolontariusz wolontariusz;
-    private Pracownikschroniska pracownikschroniska;
-    private Set<Wiadomosc> maileAdresata;
-    private Set<Wiadomosc> maileNadawcy;
-
+public class Uzytkownik  {
 
     @Id
     @Column(name = "email", nullable = false, length = 50)
+    private String email;
+
+    @Basic
+    @Column(name = "haslo", nullable = false, length = 255)
+    private String haslo;
+
+    @Basic
+    @Column(name = "imie", nullable = false, length = 50)
+    private String imie;
+
+    @Basic
+    @Column(name = "nazwisko", nullable = false, length = 50)
+    private String nazwisko;
+
+    @JsonIgnore
+    @OneToOne(mappedBy="uzytkownikEmail",
+            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+                    CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    private Przewodniczacy przewodniczacy;
+
+    @JsonIgnore
+    @OneToOne(mappedBy="uzytkownikEmail",
+            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+                    CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    private Wolontariusz wolontariusz;
+
+    @JsonIgnore
+    @OneToOne(mappedBy="uzytkownikEmail",
+            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+                    CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    private Pracownikschroniska pracownikschroniska;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "emailAdresata", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    private Set<Wiadomosc> maileAdresata;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "emailNadawcy", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    private Set<Wiadomosc> maileNadawcy;
+
+
+
     public String getEmail() {
         return email;
     }
@@ -28,8 +65,7 @@ public class Uzytkownik {
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "haslo", nullable = false, length = 255)
+
     public String getHaslo() {
         return haslo;
     }
@@ -38,8 +74,7 @@ public class Uzytkownik {
         this.haslo = haslo;
     }
 
-    @Basic
-    @Column(name = "imie", nullable = false, length = 50)
+
     public String getImie() {
         return imie;
     }
@@ -48,8 +83,7 @@ public class Uzytkownik {
         this.imie = imie;
     }
 
-    @Basic
-    @Column(name = "nazwisko", nullable = false, length = 50)
+
     public String getNazwisko() {
         return nazwisko;
     }
@@ -58,9 +92,7 @@ public class Uzytkownik {
         this.nazwisko = nazwisko;
     }
 
-    @OneToOne(mappedBy="uzytkownikEmail",
-            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-                    CascadeType.REFRESH})
+
     public Przewodniczacy getPrzewodniczacy() {
         return przewodniczacy;
     }
@@ -69,9 +101,7 @@ public class Uzytkownik {
         this.przewodniczacy = przewodniczacy;
     }
 
-    @OneToOne(mappedBy="uzytkownikEmail",
-            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-                    CascadeType.REFRESH})
+
     public Wolontariusz getWolontariusz() {
         return wolontariusz;
     }
@@ -80,9 +110,7 @@ public class Uzytkownik {
         this.wolontariusz = wolontariusz;
     }
 
-    @OneToOne(mappedBy="uzytkownikEmail",
-            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-                    CascadeType.REFRESH})
+
     public Pracownikschroniska getPracownikschroniska() {
         return pracownikschroniska;
     }
@@ -91,8 +119,7 @@ public class Uzytkownik {
         this.pracownikschroniska = pracownikschroniska;
     }
 
-    @OneToMany(mappedBy = "emailAdresata", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
-            CascadeType.REFRESH})
+
     public Set<Wiadomosc> getMaileAdresata() {
         return maileAdresata;
     }
@@ -101,8 +128,6 @@ public class Uzytkownik {
         this.maileAdresata = maileAdresata;
     }
 
-    @OneToMany(mappedBy = "emailNadawcy", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
-            CascadeType.REFRESH})
     public Set<Wiadomosc> getMaileNadawcy() {
         return maileNadawcy;
     }

@@ -6,14 +6,27 @@ import java.util.Objects;
 @Entity
 @Table(name = "oferta", schema = "psipatrol", catalog = "")
 public class Oferta {
-    private int idOferty;
-    private String tytul;
-    private String opis;
-    private String imie;
-    private Pracownikschroniska idPracownika;
 
     @Id
-    @Column(name = "idOferty", nullable = false)
+    @Column(name = "id_oferty", nullable = false)
+    private int idOferty;
+
+    @Basic
+    @Column(name = "tytul", nullable = false, length = 50)
+    private String tytul;
+
+    @Basic
+    @Column(name = "opis", nullable = false, length = 255)
+    private String opis;
+
+    @Basic
+    @Column(name = "imie", nullable = false, length = 50)
+    private String imie;
+
+
+   // private Pracownikschroniska idPracownika;
+
+
     public int getIdOferty() {
         return idOferty;
     }
@@ -22,8 +35,7 @@ public class Oferta {
         this.idOferty = idOferty;
     }
 
-    @Basic
-    @Column(name = "tytul", nullable = false, length = 50)
+
     public String getTytul() {
         return tytul;
     }
@@ -32,8 +44,7 @@ public class Oferta {
         this.tytul = tytul;
     }
 
-    @Basic
-    @Column(name = "opis", nullable = false, length = 255)
+
     public String getOpis() {
         return opis;
     }
@@ -42,8 +53,7 @@ public class Oferta {
         this.opis = opis;
     }
 
-    @Basic
-    @Column(name = "imie", nullable = false, length = 50)
+
     public String getImie() {
         return imie;
     }
@@ -53,31 +63,30 @@ public class Oferta {
     }
 
 //    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-//            CascadeType.DETACH, CascadeType.REFRESH})
-//    @JoinColumns({
-//    @JoinColumn(name = "idPracownika", nullable = false)})
+//            CascadeType.DETACH, CascadeType.REFRESH},fetch = FetchType.LAZY)
+//    @JoinColumn(name = "id_pracownika", nullable = false)
 //    public Pracownikschroniska getIdPracownika() {
 //        return idPracownika;
 //    }
+//
+//    public void setIdPracownika(Pracownikschroniska idPracownika) {
+//        this.idPracownika = idPracownika;
+//    }
 
-    public void setIdPracownika(Pracownikschroniska idPracownika) {
-        this.idPracownika = idPracownika;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Oferta that = (Oferta) o;
-        return idOferty == that.idOferty &&
-                Objects.equals(tytul, that.tytul) &&
-                Objects.equals(opis, that.opis) &&
-                Objects.equals(imie, that.imie) &&
-                Objects.equals(idPracownika, that.idPracownika);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idOferty, tytul, opis, imie, idPracownika);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Oferta that = (Oferta) o;
+//        return idOferty == that.idOferty &&
+//                Objects.equals(tytul, that.tytul) &&
+//                Objects.equals(opis, that.opis) &&
+//                Objects.equals(imie, that.imie) &&
+//                Objects.equals(idPracownika, that.idPracownika);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(idOferty, tytul, opis, imie, idPracownika);
+//    }
 }
