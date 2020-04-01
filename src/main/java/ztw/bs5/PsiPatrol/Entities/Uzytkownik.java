@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "uzytkownik", schema = "psipatrol", catalog = "")
-public class Uzytkownik  {
+public class Uzytkownik {
 
     @Id
     @Column(name = "email", nullable = false, length = 50)
@@ -54,6 +55,12 @@ public class Uzytkownik  {
     @OneToMany(mappedBy = "emailNadawcy", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
             CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private Set<Wiadomosc> maileNadawcy;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(	name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
 
 
@@ -136,6 +143,30 @@ public class Uzytkownik  {
         this.maileNadawcy = maileNadawcy;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Uzytkownik() {
+    }
+
+    public Uzytkownik(Przewodniczacy przewodniczacy, Wolontariusz wolontariusz, Pracownikschroniska pracownikschroniska) {
+        this.przewodniczacy = przewodniczacy;
+        this.wolontariusz = wolontariusz;
+        this.pracownikschroniska = pracownikschroniska;
+    }
+
+    public Uzytkownik(String email, String haslo, String imie, String nazwisko){
+        this.email=email;
+        this.haslo=haslo;
+        this.imie=imie;
+        this.nazwisko=nazwisko;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -150,5 +181,13 @@ public class Uzytkownik  {
     @Override
     public int hashCode() {
         return Objects.hash(email, haslo, imie, nazwisko);
+    }
+
+    public void addRole(Role tempRole) {
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
+        roles.add(tempRole);
+        //tempRole.setUser(this.getLogin());
     }
 }

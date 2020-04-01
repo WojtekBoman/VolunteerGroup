@@ -10,6 +10,7 @@
       <mapping class="ztw.bs5.PsiPatrol.Entities.Oferta"/>
       <mapping class="ztw.bs5.PsiPatrol.Entities.Pracownikschroniska"/>
       <mapping class="ztw.bs5.PsiPatrol.Entities.Przewodniczacy"/>
+    <mapping class="ztw.bs5.PsiPatrol.Entities.Role"/>
       <mapping class="ztw.bs5.PsiPatrol.Entities.Udzial"/>
       <mapping class="ztw.bs5.PsiPatrol.Entities.Uzytkownik"/>
       <mapping class="ztw.bs5.PsiPatrol.Entities.Wiadomosc"/>

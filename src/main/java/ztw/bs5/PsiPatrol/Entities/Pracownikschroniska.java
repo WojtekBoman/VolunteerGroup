@@ -54,6 +54,13 @@ public class Pracownikschroniska implements Serializable {
         this.oferta = oferta;
     }
 
+//    public Pracownikschroniska(Uzytkownik uzytkownikEmail) {
+//        this.uzytkownikEmail = uzytkownikEmail;
+//    }
+
+    public Pracownikschroniska() {
+    }
+
 
     public Set<Zbiorka> getZbiorka() {
         return zbiorka;

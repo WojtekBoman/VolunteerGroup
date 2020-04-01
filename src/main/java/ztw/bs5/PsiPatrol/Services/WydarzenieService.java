@@ -6,5 +6,5 @@ import ztw.bs5.PsiPatrol.Entities.Wydarzenie;
 import java.util.List;
 
 public interface WydarzenieService {
-    public List<Wydarzenie> getAllWydarzenia();
+    List<Wydarzenie> getAllWydarzenia();
 }
