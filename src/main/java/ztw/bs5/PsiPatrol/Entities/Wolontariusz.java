@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "wolontariusz", schema = "psipatrol", catalog = "")
-public class Wolontariusz implements Serializable {
+@Table(name = "wolontariusz")
+@PrimaryKeyJoinColumn(name = "uzytkownik_email")
+public class Wolontariusz extends Uzytkownik implements Serializable {
 
     public enum Stopien {
         Amator("Amator"),
@@ -21,19 +22,14 @@ public class Wolontariusz implements Serializable {
         public String getValue() {return value;}
     }
 
-    @Basic
+
     @Enumerated(EnumType.STRING)
     @Column(name = "stopien", nullable = false)
     private Stopien stopien;
 
-    @Basic
+
     @Column(name = "procentowa_aktywnosc", nullable = false, precision = 0)
     private double procentowaAktywnosc;
-
-    @Id
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "uzytkownik_email", nullable = false)
-    private Uzytkownik uzytkownikEmail;
 
     @ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
@@ -61,12 +57,14 @@ public class Wolontariusz implements Serializable {
     }
 
 
-    public Uzytkownik getUzytkownikEmail() {
-        return uzytkownikEmail;
+    public Wolontariusz() {
+
     }
 
-    public void setUzytkownikEmail(Uzytkownik uzytkownikEmail) {
-        this.uzytkownikEmail = uzytkownikEmail;
+    public Wolontariusz(String email, String haslo, String imie, String nazwisko, String stopien, double procentowaAktywnosc){
+        super(email, haslo, imie, nazwisko);
+        this.stopien=Stopien.valueOf(stopien);
+        this.procentowaAktywnosc=procentowaAktywnosc;
     }
 
 
@@ -84,12 +82,11 @@ public class Wolontariusz implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Wolontariusz that = (Wolontariusz) o;
         return Double.compare(that.procentowaAktywnosc, procentowaAktywnosc) == 0 &&
-                Objects.equals(stopien, that.stopien) &&
-                Objects.equals(uzytkownikEmail, that.uzytkownikEmail);
+                Objects.equals(stopien, that.stopien);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(stopien, procentowaAktywnosc, uzytkownikEmail);
+        return Objects.hash(stopien, procentowaAktywnosc);
     }
 }

@@ -6,17 +6,13 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "pracownikschroniska", schema = "psipatrol", catalog = "")
-public class Pracownikschroniska implements Serializable {
+@Table(name = "pracownikschroniska")
+@PrimaryKeyJoinColumn(name = "uzytkownik_email")
+public class Pracownikschroniska extends Uzytkownik implements Serializable {
 
-    @Basic
+
     @Column(name = "nazwa_schroniska", nullable = false, length = 50)
     private String nazwaSchroniska;
-
-    @Id
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "uzytkownik_email", nullable = false)
-    private Uzytkownik uzytkownikEmail;
 
     @OneToMany(mappedBy = "idPracownika", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
             CascadeType.REFRESH})
@@ -35,17 +31,6 @@ public class Pracownikschroniska implements Serializable {
         this.nazwaSchroniska = nazwaSchroniska;
     }
 
-
-    public Uzytkownik getUzytkownikEmail() {
-        return uzytkownikEmail;
-    }
-
-    public void setUzytkownikEmail(Uzytkownik uzytkownikEmail) {
-        this.uzytkownikEmail = uzytkownikEmail;
-    }
-
-
-
     public Set<Oferta> getOferta() {
         return oferta;
     }
@@ -54,13 +39,14 @@ public class Pracownikschroniska implements Serializable {
         this.oferta = oferta;
     }
 
-//    public Pracownikschroniska(Uzytkownik uzytkownikEmail) {
-//        this.uzytkownikEmail = uzytkownikEmail;
-//    }
 
     public Pracownikschroniska() {
     }
 
+    public Pracownikschroniska(String email, String haslo, String imie, String nazwisko, String nazwaSchroniska) {
+        super(email, haslo, imie, nazwisko);
+        this.nazwaSchroniska = nazwaSchroniska;
+    }
 
     public Set<Zbiorka> getZbiorka() {
         return zbiorka;
@@ -75,12 +61,11 @@ public class Pracownikschroniska implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pracownikschroniska that = (Pracownikschroniska) o;
-        return Objects.equals(nazwaSchroniska, that.nazwaSchroniska) &&
-                Objects.equals(uzytkownikEmail, that.uzytkownikEmail);
+        return Objects.equals(nazwaSchroniska, that.nazwaSchroniska);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nazwaSchroniska, uzytkownikEmail);
+        return Objects.hash(nazwaSchroniska);
     }
 }

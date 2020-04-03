@@ -6,17 +6,14 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "przewodniczacy", schema = "psipatrol", catalog = "")
-public class Przewodniczacy implements Serializable {
+@Table(name = "przewodniczacy")
+@PrimaryKeyJoinColumn(name = "uzytkownik_email")
+public class Przewodniczacy extends Uzytkownik implements Serializable {
 
-    @Basic
+
     @Column(name = "liczba_zorganizowanych_wyd", nullable = false)
     private int liczbaZorganizowanychWyd;
 
-    @Id
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "uzytkownik_email", nullable = false)
-    private Uzytkownik uzytkownikEmail;
 
     @OneToMany(mappedBy = "idTworcy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Wydarzenie> wydarzenia;
@@ -31,15 +28,6 @@ public class Przewodniczacy implements Serializable {
     }
 
 
-    public Uzytkownik getUzytkownikEmail() {
-        return uzytkownikEmail;
-    }
-
-    public void setUzytkownikEmail(Uzytkownik uzytkownikEmail) {
-        this.uzytkownikEmail = uzytkownikEmail;
-    }
-
-
     public Set<Wydarzenie> getWydarzenia() {
         return wydarzenia;
     }
@@ -48,17 +36,24 @@ public class Przewodniczacy implements Serializable {
         this.wydarzenia = wydarzenia;
     }
 
+    public Przewodniczacy() {
+    }
+
+    public Przewodniczacy(String email, String haslo, String imie, String nazwisko, int liczbaZorganizowanychWyd) {
+        super(email, haslo, imie, nazwisko);
+        this.liczbaZorganizowanychWyd=liczbaZorganizowanychWyd;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Przewodniczacy that = (Przewodniczacy) o;
-        return liczbaZorganizowanychWyd == that.liczbaZorganizowanychWyd &&
-                Objects.equals(uzytkownikEmail, that.uzytkownikEmail);
+        return liczbaZorganizowanychWyd == that.liczbaZorganizowanychWyd;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(liczbaZorganizowanychWyd, uzytkownikEmail);
+        return Objects.hash(liczbaZorganizowanychWyd);
     }
 }

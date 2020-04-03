@@ -9,42 +9,27 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "uzytkownik", schema = "psipatrol", catalog = "")
+@Table(name = "uzytkownik")
+@Inheritance(
+        strategy = InheritanceType.JOINED
+)
 public class Uzytkownik {
 
     @Id
     @Column(name = "email", nullable = false, length = 50)
     private String email;
 
-    @Basic
+
     @Column(name = "haslo", nullable = false, length = 255)
     private String haslo;
 
-    @Basic
+
     @Column(name = "imie", nullable = false, length = 50)
     private String imie;
 
-    @Basic
+
     @Column(name = "nazwisko", nullable = false, length = 50)
     private String nazwisko;
-
-    @JsonIgnore
-    @OneToOne(mappedBy="uzytkownikEmail",
-            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-                    CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    private Przewodniczacy przewodniczacy;
-
-    @JsonIgnore
-    @OneToOne(mappedBy="uzytkownikEmail",
-            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-                    CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    private Wolontariusz wolontariusz;
-
-    @JsonIgnore
-    @OneToOne(mappedBy="uzytkownikEmail",
-            cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-                    CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    private Pracownikschroniska pracownikschroniska;
 
     @JsonIgnore
     @OneToMany(mappedBy = "emailAdresata", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
@@ -99,34 +84,6 @@ public class Uzytkownik {
         this.nazwisko = nazwisko;
     }
 
-
-    public Przewodniczacy getPrzewodniczacy() {
-        return przewodniczacy;
-    }
-
-    public void setPrzewodniczacy(Przewodniczacy przewodniczacy) {
-        this.przewodniczacy = przewodniczacy;
-    }
-
-
-    public Wolontariusz getWolontariusz() {
-        return wolontariusz;
-    }
-
-    public void setWolontariusz(Wolontariusz wolontariusz) {
-        this.wolontariusz = wolontariusz;
-    }
-
-
-    public Pracownikschroniska getPracownikschroniska() {
-        return pracownikschroniska;
-    }
-
-    public void setPracownikschroniska(Pracownikschroniska pracownikschroniska) {
-        this.pracownikschroniska = pracownikschroniska;
-    }
-
-
     public Set<Wiadomosc> getMaileAdresata() {
         return maileAdresata;
     }
@@ -154,11 +111,6 @@ public class Uzytkownik {
     public Uzytkownik() {
     }
 
-    public Uzytkownik(Przewodniczacy przewodniczacy, Wolontariusz wolontariusz, Pracownikschroniska pracownikschroniska) {
-        this.przewodniczacy = przewodniczacy;
-        this.wolontariusz = wolontariusz;
-        this.pracownikschroniska = pracownikschroniska;
-    }
 
     public Uzytkownik(String email, String haslo, String imie, String nazwisko){
         this.email=email;
@@ -188,6 +140,6 @@ public class Uzytkownik {
             roles = new HashSet<>();
         }
         roles.add(tempRole);
-        //tempRole.setUser(this.getLogin());
+        //tempRole.setUser(this.getEmail());
     }
 }
