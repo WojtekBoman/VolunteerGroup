@@ -1,5 +1,7 @@
 package ztw.bs5.PsiPatrol.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,7 +16,7 @@ public class Przewodniczacy extends Uzytkownik implements Serializable {
     @Column(name = "liczba_zorganizowanych_wyd", nullable = false)
     private int liczbaZorganizowanychWyd;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "idTworcy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Wydarzenie> wydarzenia;
 

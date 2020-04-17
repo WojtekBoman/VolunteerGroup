@@ -1,5 +1,6 @@
 package ztw.bs5.PsiPatrol.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -52,6 +53,7 @@ public class Wydarzenie {
     @JoinColumn(name="id_tworcy", nullable = false)
     private Przewodniczacy idTworcy;
 
+    @JsonIgnore
     @ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH,},fetch = FetchType.EAGER)
     @JoinTable(name="Udzial",
@@ -62,13 +64,20 @@ public class Wydarzenie {
     public Wydarzenie() {
     }
 
-    public Wydarzenie(int idZdarzenia, String nazwa, int liczbaPotrzebnychWolontariuszy, String kategoria, Date dataRozpoczecia) {
-        this.idZdarzenia=idZdarzenia;
+    public Wydarzenie(String nazwa, int liczbaPotrzebnychWolontariuszy, String kategoria, Date dataRozpoczecia) {
         this.nazwa=nazwa;
         this.liczbaPotrzebnychWolontariuszy=liczbaPotrzebnychWolontariuszy;
         this.kategoria=Kategoria.valueOf(kategoria);
         this.dataRozpoczecia=dataRozpoczecia;
     }
+
+    public Wydarzenie(String nazwa, int liczbaPotrzebnychWolontariuszy, Kategoria kategoria, Date dataRozpoczecia) {
+        this.nazwa=nazwa;
+        this.liczbaPotrzebnychWolontariuszy=liczbaPotrzebnychWolontariuszy;
+        this.kategoria=kategoria;
+        this.dataRozpoczecia=dataRozpoczecia;
+    }
+
 
 
     public int getIdZdarzenia() {

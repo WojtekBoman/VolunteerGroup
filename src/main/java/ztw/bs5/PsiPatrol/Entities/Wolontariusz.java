@@ -1,5 +1,7 @@
 package ztw.bs5.PsiPatrol.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -31,6 +33,7 @@ public class Wolontariusz extends Uzytkownik implements Serializable {
     @Column(name = "procentowa_aktywnosc", nullable = false, precision = 0)
     private double procentowaAktywnosc;
 
+    @JsonIgnore
     @ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name="Udzial",
