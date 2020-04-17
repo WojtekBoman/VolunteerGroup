@@ -78,7 +78,8 @@ public class WydarzenieController {
         przewodniczacy.setLiczbaZorganizowanychWyd(liczbaWydarzen);
 
         try {
-            Wydarzenie tempWydarzenie = new Wydarzenie(wydarzenie.getNazwa(), wydarzenie.getLiczbaPotrzebnychWolontariuszy(), wydarzenie.getKategoria(), wydarzenie.getDataRozpoczecia());
+            Wydarzenie tempWydarzenie = new Wydarzenie(wydarzenie.getNazwa(),wydarzenie.getMiejsce(),wydarzenie.getAdres(),wydarzenie.getOpis(),
+                                                     wydarzenie.getLiczbaPotrzebnychWolontariuszy(), wydarzenie.getKategoria(), wydarzenie.getDataRozpoczecia());
             tempWydarzenie.setIdTworcy(przewodniczacy);
             Wydarzenie wydarzenieToSave = wydarzenieRepository.save(tempWydarzenie);
             return new ResponseEntity<>(wydarzenieToSave, HttpStatus.CREATED);

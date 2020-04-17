@@ -36,6 +36,18 @@ public class Wydarzenie {
     private String nazwa;
 
     @Basic
+    @Column(name = "miejsce", nullable = false)
+    private String miejsce;
+
+    @Basic
+    @Column(name = "adres", nullable = false)
+    private String adres;
+
+    @Basic
+    @Column(name = "opis", nullable = false)
+    private String opis;
+
+    @Basic
     @Column(name = "liczba_potrzebnych_wolontariuszy", nullable = false)
     private int liczbaPotrzebnychWolontariuszy;
 
@@ -64,15 +76,22 @@ public class Wydarzenie {
     public Wydarzenie() {
     }
 
-    public Wydarzenie(String nazwa, int liczbaPotrzebnychWolontariuszy, String kategoria, Date dataRozpoczecia) {
+
+    public Wydarzenie(String nazwa, String miejsce, String adres, String opis, int liczbaPotrzebnychWolontariuszy, String kategoria, Date dataRozpoczecia) {
         this.nazwa=nazwa;
+        this.miejsce=miejsce;
+        this.adres=adres;
+        this.opis=opis;
         this.liczbaPotrzebnychWolontariuszy=liczbaPotrzebnychWolontariuszy;
         this.kategoria=Kategoria.valueOf(kategoria);
         this.dataRozpoczecia=dataRozpoczecia;
     }
 
-    public Wydarzenie(String nazwa, int liczbaPotrzebnychWolontariuszy, Kategoria kategoria, Date dataRozpoczecia) {
+    public Wydarzenie(String nazwa,String miejsce, String adres, String opis, int liczbaPotrzebnychWolontariuszy, Kategoria kategoria, Date dataRozpoczecia) {
         this.nazwa=nazwa;
+        this.miejsce=miejsce;
+        this.adres=adres;
+        this.opis=opis;
         this.liczbaPotrzebnychWolontariuszy=liczbaPotrzebnychWolontariuszy;
         this.kategoria=kategoria;
         this.dataRozpoczecia=dataRozpoczecia;
@@ -97,6 +116,29 @@ public class Wydarzenie {
         this.nazwa = nazwa;
     }
 
+    public String getMiejsce() {
+        return miejsce;
+    }
+
+    public void setMiejsce(String miejsce) {
+        this.miejsce = miejsce;
+    }
+
+    public String getAdres() {
+        return adres;
+    }
+
+    public void setAdres(String adres) {
+        this.adres = adres;
+    }
+
+    public String getOpis() {
+        return opis;
+    }
+
+    public void setOpis(String opis) {
+        this.opis = opis;
+    }
 
     public int getLiczbaPotrzebnychWolontariuszy() {
         return liczbaPotrzebnychWolontariuszy;
