@@ -27,3 +27,11 @@ i wspomagająca komunikację między użytkownikami korzystającymi z aplikacji.
   <li>Jakub Szańca</li>
 </ul>
 
+
+## Funkcjonalności
+
+<ul>
+  <li>Dodanie wydarzenia (POST) - Możlowość dodania nowego wydarzenia przez przewodniczącego</li>
+  <li>Pobranie wydarzenia (GET) - Możliwość pobrania jednego lub wielu wydarzeń dla każdego zalogowanego użytkownika</li>
+</ul>
+
