@@ -11,8 +11,10 @@ import ztw.bs5.PsiPatrol.Entities.Przewodniczacy;
 import ztw.bs5.PsiPatrol.Entities.Uzytkownik;
 import ztw.bs5.PsiPatrol.Entities.Wydarzenie;
 import ztw.bs5.PsiPatrol.Repositories.PrzewodniczacyRepository;
+import ztw.bs5.PsiPatrol.Repositories.WolontariuszRepository;
 import ztw.bs5.PsiPatrol.Repositories.WydarzenieRepository;
 import ztw.bs5.PsiPatrol.Services.UzytkownikService;
+import ztw.bs5.PsiPatrol.Services.WolontariuszService;
 import ztw.bs5.PsiPatrol.Services.WydarzenieService;
 
 import java.util.ArrayList;
@@ -29,7 +31,13 @@ public class WydarzenieController {
     private WydarzenieService wydarzenieService;
 
     @Autowired
+    private WolontariuszService wolontariuszService;
+
+    @Autowired
     private WydarzenieRepository wydarzenieRepository;
+
+    @Autowired
+    private WolontariuszRepository wolontariuszRepository;
 
     @Autowired
     private PrzewodniczacyRepository przewodniczacyRepository;
@@ -53,7 +61,7 @@ public class WydarzenieController {
 
     @GetMapping("/wydarzenia/{id}")
     @PreAuthorize("hasRole('WOLONTARIUSZ') or hasRole('PRACOWNIK') or hasRole('PRZEWODNICZACY')")
-    public ResponseEntity<Wydarzenie> getWudarzenieById(@PathVariable("id") int id) {
+    public ResponseEntity<Wydarzenie> getWydarzenieById(@PathVariable("id") int id) {
         Optional<Wydarzenie> wydarzenie = wydarzenieRepository.findById(id);
 
         if (wydarzenie.isPresent()) {
@@ -82,6 +90,7 @@ public class WydarzenieController {
                                                      wydarzenie.getLiczbaPotrzebnychWolontariuszy(), wydarzenie.getKategoria(), wydarzenie.getDataRozpoczecia());
             tempWydarzenie.setIdTworcy(przewodniczacy);
             Wydarzenie wydarzenieToSave = wydarzenieRepository.save(tempWydarzenie);
+            wolontariuszService.updateAllWolonariszStats();
             return new ResponseEntity<>(wydarzenieToSave, HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);

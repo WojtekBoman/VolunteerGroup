@@ -194,6 +194,12 @@ public class Wydarzenie {
         wolontariusze.add(wolontariusz);
     }
 
+    public void removeWolontariusz(Wolontariusz wolontariusz) {
+        wolontariusze.remove(wolontariusz);
+    }
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
