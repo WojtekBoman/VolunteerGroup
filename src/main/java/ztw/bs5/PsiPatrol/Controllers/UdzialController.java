@@ -41,7 +41,7 @@ public class UdzialController {
 
     @PostMapping("/udzial/wez/{id-wydarzenia}")
     @PreAuthorize("hasRole('WOLONTARIUSZ')")
-    public ResponseEntity<Wydarzenie> assignWolontariuszToWydarzenie(@PathVariable("id-wydarzenia") int id) {
+    public ResponseEntity<?> assignWolontariuszToWydarzenie(@PathVariable("id-wydarzenia") int id) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
@@ -52,14 +52,26 @@ public class UdzialController {
 
         if (wyd.isPresent()) {
             Wydarzenie wydarzenieToSave = wyd.get();
-            if (wolontariuszService.isAssigned(wolontariusz,wydarzenieToSave)){
+
+            if (wolontariuszService.isAssigned(wolontariusz,wydarzenieToSave) || wydarzenieService.isFull(wydarzenieToSave)){
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
 
-            wolontariuszService.updateWolonariszStats(wolontariusz);
+
             wydarzenieToSave.addWolontariusz(wolontariusz);
 
-            return new ResponseEntity<>(wydarzenieRepository.save(wydarzenieToSave), HttpStatus.OK);
+            //zwiekszenie liczby przypisanych
+            int participants = wydarzenieToSave.getLiczbaPrzypisanychWolontariuszy();
+            participants++;
+
+            wydarzenieToSave.setLiczbaPrzypisanychWolontariuszy(participants);
+            wydarzenieRepository.save(wydarzenieToSave);
+            wolontariuszService.updateWolonariszStats(wolontariusz);
+
+
+
+
+            return new ResponseEntity<>(new MessageResponse("Przypisano pomyslnie"), HttpStatus.OK);
         } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
@@ -81,6 +93,12 @@ public class UdzialController {
             }
 
             wydarzenieToSave.removeWolontariusz(wolontariusz);
+
+            //zmniejszenie liczby przypisanych wolontariuszy
+            int participants = wydarzenieToSave.getLiczbaPrzypisanychWolontariuszy();
+            participants--;
+            wydarzenieToSave.setLiczbaPrzypisanychWolontariuszy(participants);
+
             wydarzenieRepository.save(wydarzenieToSave);
             wolontariuszService.updateWolonariszStats(wolontariusz);
 

@@ -52,6 +52,10 @@ public class Wydarzenie {
     private int liczbaPotrzebnychWolontariuszy;
 
     @Basic
+    @Column(name = "liczba_przypisanych_wolontariuszy", nullable = false)
+    private int liczbaPrzypisanychWolontariuszy;
+
+    @Basic
     @Enumerated(EnumType.STRING)
     @Column(name = "kategoria", nullable = false)
     private Kategoria kategoria;
@@ -77,22 +81,26 @@ public class Wydarzenie {
     }
 
 
-    public Wydarzenie(String nazwa, String miejsce, String adres, String opis, int liczbaPotrzebnychWolontariuszy, String kategoria, Date dataRozpoczecia) {
+    public Wydarzenie(String nazwa, String miejsce, String adres, String opis,
+                      int liczbaPotrzebnychWolontariuszy, String kategoria, Date dataRozpoczecia) {
         this.nazwa=nazwa;
         this.miejsce=miejsce;
         this.adres=adres;
         this.opis=opis;
         this.liczbaPotrzebnychWolontariuszy=liczbaPotrzebnychWolontariuszy;
+        this.liczbaPrzypisanychWolontariuszy=0;
         this.kategoria=Kategoria.valueOf(kategoria);
         this.dataRozpoczecia=dataRozpoczecia;
     }
 
-    public Wydarzenie(String nazwa,String miejsce, String adres, String opis, int liczbaPotrzebnychWolontariuszy, Kategoria kategoria, Date dataRozpoczecia) {
+    public Wydarzenie(String nazwa,String miejsce, String adres, String opis,
+                      int liczbaPotrzebnychWolontariuszy, Kategoria kategoria, Date dataRozpoczecia) {
         this.nazwa=nazwa;
         this.miejsce=miejsce;
         this.adres=adres;
         this.opis=opis;
         this.liczbaPotrzebnychWolontariuszy=liczbaPotrzebnychWolontariuszy;
+        this.liczbaPrzypisanychWolontariuszy=0;
         this.kategoria=kategoria;
         this.dataRozpoczecia=dataRozpoczecia;
     }
@@ -148,6 +156,13 @@ public class Wydarzenie {
         this.liczbaPotrzebnychWolontariuszy = liczbaPotrzebnychWolontariuszy;
     }
 
+    public int getLiczbaPrzypisanychWolontariuszy() {
+        return liczbaPrzypisanychWolontariuszy;
+    }
+
+    public void setLiczbaPrzypisanychWolontariuszy(int liczbaPrzypisanychWolontariuszy) {
+        this.liczbaPrzypisanychWolontariuszy = liczbaPrzypisanychWolontariuszy;
+    }
 
     public Kategoria getKategoria() {
         return kategoria;

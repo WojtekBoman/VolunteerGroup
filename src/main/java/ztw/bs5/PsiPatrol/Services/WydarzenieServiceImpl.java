@@ -27,4 +27,9 @@ public class WydarzenieServiceImpl implements WydarzenieService {
         return wolontariusz.getWydarzenia();
     }
 
+    @Override
+    public boolean isFull(Wydarzenie wydarzenie) {
+        return wydarzenie.getLiczbaPotrzebnychWolontariuszy()<=wydarzenie.getLiczbaPrzypisanychWolontariuszy();
+    }
+
 }

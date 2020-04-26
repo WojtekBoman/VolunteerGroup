@@ -9,4 +9,5 @@ import java.util.List;
 public interface WydarzenieService {
     List<Wydarzenie> getAllWydarzenia();
     List<Wydarzenie> getWydarzeniaWolontariusza(Wolontariusz wolontariusz);
+    boolean isFull(Wydarzenie wydarzenie);
 }
