@@ -8,6 +8,7 @@ import ztw.bs5.PsiPatrol.Entities.Wydarzenie;
 import ztw.bs5.PsiPatrol.Repositories.UzytkownikRepository;
 import ztw.bs5.PsiPatrol.Repositories.WolontariuszRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,10 +22,10 @@ public class WolontariuszServiceImpl implements WolontariuszService {
 
     @Override
     public void changeActivityPercentage(Wolontariusz wolontariusz) {
-        List<Wydarzenie> allWydarzenia = wydarzenieService.getAllWydarzenia();
-        List<Wydarzenie> wydarzeniaWolontariusza = wydarzenieService.getWydarzeniaWolontariusza(wolontariusz);
+        List<Wydarzenie> allWydarzenia = new ArrayList<>(wydarzenieService.getAllWydarzenia());
+        List<Wydarzenie> wydarzeniaWolontariusza = new ArrayList<>(wydarzenieService.getWydarzeniaWolontariusza(wolontariusz));
 
-        double percentage = (double) wydarzeniaWolontariusza.size() / allWydarzenia.size();
+        double percentage = (double) wydarzeniaWolontariusza.size() / (double) allWydarzenia.size();
 
         wolontariusz.setProcentowaAktywnosc(percentage);
 
@@ -52,7 +53,7 @@ public class WolontariuszServiceImpl implements WolontariuszService {
 
     @Override
     public void updateAllWolonariszStats() {
-        List<Wolontariusz> wolontariusz = wolontariuszRepository.findAll();
+        List<Wolontariusz> wolontariusz = new ArrayList<>(wolontariuszRepository.findAll());
         for (Wolontariusz value : wolontariusz) {
             updateWolonariszStats(value);
         }

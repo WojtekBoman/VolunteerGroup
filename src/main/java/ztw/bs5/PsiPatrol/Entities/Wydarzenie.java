@@ -56,6 +56,10 @@ public class Wydarzenie {
     private int liczbaPrzypisanychWolontariuszy;
 
     @Basic
+    @Column(name = "czy_pelne", nullable = false)
+    private boolean czyPelne;
+
+    @Basic
     @Enumerated(EnumType.STRING)
     @Column(name = "kategoria", nullable = false)
     private Kategoria kategoria;
@@ -89,6 +93,7 @@ public class Wydarzenie {
         this.opis=opis;
         this.liczbaPotrzebnychWolontariuszy=liczbaPotrzebnychWolontariuszy;
         this.liczbaPrzypisanychWolontariuszy=0;
+        this.czyPelne=false;
         this.kategoria=Kategoria.valueOf(kategoria);
         this.dataRozpoczecia=dataRozpoczecia;
     }
@@ -101,6 +106,7 @@ public class Wydarzenie {
         this.opis=opis;
         this.liczbaPotrzebnychWolontariuszy=liczbaPotrzebnychWolontariuszy;
         this.liczbaPrzypisanychWolontariuszy=0;
+        this.czyPelne=false;
         this.kategoria=kategoria;
         this.dataRozpoczecia=dataRozpoczecia;
     }
@@ -162,6 +168,14 @@ public class Wydarzenie {
 
     public void setLiczbaPrzypisanychWolontariuszy(int liczbaPrzypisanychWolontariuszy) {
         this.liczbaPrzypisanychWolontariuszy = liczbaPrzypisanychWolontariuszy;
+    }
+
+    public boolean isCzyPelne() {
+        return czyPelne;
+    }
+
+    public void setCzyPelne(boolean czyPelne) {
+        this.czyPelne = czyPelne;
     }
 
     public Kategoria getKategoria() {

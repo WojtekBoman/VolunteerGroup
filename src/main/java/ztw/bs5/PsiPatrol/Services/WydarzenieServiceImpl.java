@@ -8,6 +8,7 @@ import ztw.bs5.PsiPatrol.Entities.Wydarzenie;
 import ztw.bs5.PsiPatrol.Repositories.UzytkownikRepository;
 import ztw.bs5.PsiPatrol.Repositories.WydarzenieRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,7 +25,7 @@ public class WydarzenieServiceImpl implements WydarzenieService {
 
     @Override
     public List<Wydarzenie> getWydarzeniaWolontariusza(Wolontariusz wolontariusz) {
-        return wolontariusz.getWydarzenia();
+        return new ArrayList<>(wolontariusz.getWydarzenia());
     }
 
     @Override

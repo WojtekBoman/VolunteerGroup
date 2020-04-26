@@ -81,11 +81,7 @@ public class Wolontariusz extends Uzytkownik implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Wolontariusz that = (Wolontariusz) o;
-        return Double.compare(that.procentowaAktywnosc, procentowaAktywnosc) == 0 &&
-                Objects.equals(stopien, that.stopien);
+        return super.equals(o);
     }
 
     @Override

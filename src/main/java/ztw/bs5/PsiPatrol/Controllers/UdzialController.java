@@ -53,16 +53,22 @@ public class UdzialController {
         if (wyd.isPresent()) {
             Wydarzenie wydarzenieToSave = wyd.get();
 
-            if (wolontariuszService.isAssigned(wolontariusz,wydarzenieToSave) || wydarzenieService.isFull(wydarzenieToSave)){
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            if (wolontariuszService.isAssigned(wolontariusz,wydarzenieToSave)){
+                return new ResponseEntity<>(new MessageResponse("jest już przypisany"),HttpStatus.CONFLICT);
             }
 
+            if (wydarzenieService.isFull(wydarzenieToSave)){
+                return new ResponseEntity<>(new MessageResponse("jest full"),HttpStatus.CONFLICT);
+            }
 
             wydarzenieToSave.addWolontariusz(wolontariusz);
 
             //zwiekszenie liczby przypisanych
             int participants = wydarzenieToSave.getLiczbaPrzypisanychWolontariuszy();
             participants++;
+            if(participants==wydarzenieToSave.getLiczbaPotrzebnychWolontariuszy()){
+                wydarzenieToSave.setCzyPelne(true);
+            }
 
             wydarzenieToSave.setLiczbaPrzypisanychWolontariuszy(participants);
             wydarzenieRepository.save(wydarzenieToSave);
@@ -97,7 +103,9 @@ public class UdzialController {
             //zmniejszenie liczby przypisanych wolontariuszy
             int participants = wydarzenieToSave.getLiczbaPrzypisanychWolontariuszy();
             participants--;
+
             wydarzenieToSave.setLiczbaPrzypisanychWolontariuszy(participants);
+            wydarzenieToSave.setCzyPelne(false);
 
             wydarzenieRepository.save(wydarzenieToSave);
             wolontariuszService.updateWolonariszStats(wolontariusz);
@@ -146,7 +154,7 @@ public class UdzialController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        List<Wolontariusz> listaWolontariuszy = wydarzenie.get().getWolontariusze();
+        List<Wolontariusz> listaWolontariuszy = new ArrayList<>(wydarzenie.get().getWolontariusze());
 
         if (listaWolontariuszy.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
