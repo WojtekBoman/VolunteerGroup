@@ -48,4 +48,17 @@ GET /api/udzial/uzytkownicy-wydarzenia/{id-wydarzenia} | Pobranie użytkowników
 POST /api/udzial/wez/{id-wydarzenia} | Wzięcie udziału w wydarzeniu - Możliwość przypisania zalogowanego użytkownika do danego wydarzenia
 POST /api//udzial/anuluj/{id-wydarzenia} | Anulowanie udziału w wydarzeniu - Możliwość usunięcia przypisania zalogowanego użytkownika do danego wydarzenia
 
+### Oferta
+
+| Request| Opis |
+|-|-|
+GET /api/oferty | Pobranie ofert - Możliwość pobrania wielu ofert dla każdego zalogowanego użytkownika
+GET /api/oferty/{id} | Pobranie oferty - Możliwość pobrania wybranej oferty dla każdego zalogowanego użytkownika
+POST /api/oferty | Dodanie oferty - Możlowość dodania nowej oferty przez pracownika schroniska
+
+### Pracownik schroniska
+
+| Request| Opis |
+|-|-|
+POST /api/nazwa-schroniska | Zmiana nazwy schroniska - Możlowość zmiany nazwy schroniska dla pracownika
 
