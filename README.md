@@ -28,10 +28,24 @@ i wspomagająca komunikację między użytkownikami korzystającymi z aplikacji.
 </ul>
 
 
-## Funkcjonalności
+## Requesty
 
-<ul>
-  <li>Dodanie wydarzenia (POST) - Możlowość dodania nowego wydarzenia przez przewodniczącego</li>
-  <li>Pobranie wydarzenia (GET) - Możliwość pobrania jednego lub wielu wydarzeń dla każdego zalogowanego użytkownika</li>
-</ul>
+### Wydarzenie
+
+| Request| Opis |
+|-|-|
+GET /api/wydarzenia | Pobranie wydarzeń - Możliwość pobrania wielu wydarzeń dla każdego zalogowanego użytkownika
+GET /api/wydarzenia/{id} | Pobranie wydarzenia - Możliwość pobrania określonego wydarzenia dla każdego zalogowanego użytkownika
+POST /api/wydarzenia | Dodanie wydarzenia - Możlowość dodania nowego wydarzenia przez przewodniczącego
+
+
+### Udzial
+| Request| Opis |
+|-|-|
+GET /api/udzial/wydarzenia-uzytkownika | Pobranie wydarzeń dla użytkownika - Możliwość pobrania wszystkich wydarzeń w których zalogowany użytkownik bierze udział
+GET /api/udzial/wydarzenia-uzytkownika/{id-uzytkownika} | Pobranie wydarzeń dla użytkownika - Możliwość pobrania wszystkich wydarzeń w których wskazany użytkownik bierze udział
+GET /api/udzial/uzytkownicy-wydarzenia/{id-wydarzenia} | Pobranie użytkowników dla wydarzenia - Możlowość pobrania wszystkich użytkoników przypisanych do danego wydarzenia
+POST /api/udzial/wez/{id-wydarzenia} | Wzięcie udziału w wydarzeniu - Możliwość przypisania zalogowanego użytkownika do danego wydarzenia
+POST /api//udzial/anuluj/{id-wydarzenia} | Anulowanie udziału w wydarzeniu - Możliwość usunięcia przypisania zalogowanego użytkownika do danego wydarzenia
+
 
