@@ -1,11 +1,15 @@
 package ztw.bs5.PsiPatrol.Entities;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "oferta", schema = "psipatrol", catalog = "")
 public class Oferta {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +28,19 @@ public class Oferta {
     @Column(name = "imie", nullable = false, length = 50)
     private String imie;
 
-
+    @NotFound(action = NotFoundAction.IGNORE)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_pracownika", nullable = false)
     private Pracownikschroniska idPracownika;
 
+    public Oferta() {
+    }
+
+    public Oferta(String tytul, String opis, String imie) {
+        this.tytul = tytul;
+        this.opis = opis;
+        this.imie = imie;
+    }
 
     public int getIdOferty() {
         return idOferty;
@@ -63,9 +77,7 @@ public class Oferta {
         this.imie = imie;
     }
 
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH},fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_pracownika", nullable = false)
+
     public Pracownikschroniska getIdPracownika() {
         return idPracownika;
     }

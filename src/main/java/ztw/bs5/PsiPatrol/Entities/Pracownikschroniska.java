@@ -1,5 +1,7 @@
 package ztw.bs5.PsiPatrol.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,10 +16,12 @@ public class Pracownikschroniska extends Uzytkownik implements Serializable {
     @Column(name = "nazwa_schroniska", nullable = false, length = 50)
     private String nazwaSchroniska;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "idPracownika", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
             CascadeType.REFRESH})
     private Set<Oferta> oferta;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "idPracownika", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
             CascadeType.REFRESH})
     private Set<Zbiorka> zbiorka;
