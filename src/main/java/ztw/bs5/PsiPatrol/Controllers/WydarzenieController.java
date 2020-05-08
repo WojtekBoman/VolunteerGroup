@@ -1,6 +1,9 @@
 package ztw.bs5.PsiPatrol.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -101,14 +104,13 @@ public class WydarzenieController {
 
     @GetMapping("/wydarzenia/filtered")
     @PreAuthorize("hasRole('WOLONTARIUSZ') or hasRole('PRACOWNIK') or hasRole('PRZEWODNICZACY')")
-    public ResponseEntity<List<Wydarzenie>> getFilteredWydarzenia(@RequestParam(required=false, name="name", defaultValue = "") String name,
+    public ResponseEntity<?> getFilteredWydarzenia(@RequestParam(required=false, name="name", defaultValue = "") String name,
                                                                   @RequestParam(required=false, name="place",defaultValue = "") String place,
                                                                   @RequestParam(required=false, name="category",defaultValue = "") String category,
                                                                   @RequestParam(required=false, name="beginDate",defaultValue = "1000-01-01") String beginDate,
                                                                   @RequestParam(required=false, name="endDate",defaultValue = "3000-01-01") String endDate,
-                                                                  @RequestParam(required=false, name="onlyAvailable",defaultValue = "false") String onlyAvailable) {
+                                                                  @RequestParam(required=false, name="onlyAvailable",defaultValue = "false") String onlyAvailable, Pageable pageable) {
         System.out.println("Kontroler");
-       // System.out.println(category);
         try {
             List<Wydarzenie> wydarzenia = new ArrayList<>(wydarzenieService.getFilteredWydarzeniaList(name, place,category, beginDate, endDate,Boolean.parseBoolean(onlyAvailable)));
 
@@ -116,7 +118,11 @@ public class WydarzenieController {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
-            return new ResponseEntity<>(wydarzenia, HttpStatus.OK);
+            int start = (int)pageable.getOffset();
+            int end = (start + pageable.getPageSize()) > wydarzenia.size() ? wydarzenia.size() : (start + pageable.getPageSize());
+            Page<Wydarzenie> pages = new PageImpl<Wydarzenie>(wydarzenia.subList(start, end), pageable, wydarzenia.size());
+
+            return new ResponseEntity<>(pages, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
