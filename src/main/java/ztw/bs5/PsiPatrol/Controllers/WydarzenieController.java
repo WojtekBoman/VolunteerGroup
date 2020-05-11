@@ -110,7 +110,7 @@ public class WydarzenieController {
                                                                   @RequestParam(required=false, name="beginDate",defaultValue = "1000-01-01") String beginDate,
                                                                   @RequestParam(required=false, name="endDate",defaultValue = "3000-01-01") String endDate,
                                                                   @RequestParam(required=false, name="onlyAvailable",defaultValue = "false") String onlyAvailable, Pageable pageable) {
-        System.out.println("Kontroler");
+
         try {
             List<Wydarzenie> wydarzenia = new ArrayList<>(wydarzenieService.getFilteredWydarzeniaList(name, place,category, beginDate, endDate,Boolean.parseBoolean(onlyAvailable)));
 
