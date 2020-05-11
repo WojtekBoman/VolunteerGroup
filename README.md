@@ -36,6 +36,7 @@ i wspomagająca komunikację między użytkownikami korzystającymi z aplikacji.
 |-|-|
 GET /api/wydarzenia | Pobranie wydarzeń - Możliwość pobrania wielu wydarzeń dla każdego zalogowanego użytkownika
 GET /api/wydarzenia/{id} | Pobranie wydarzenia - Możliwość pobrania określonego wydarzenia dla każdego zalogowanego użytkownika
+GET /api/wydarzenia/filtered Pobieranie przefiltrowanych wydarzeń - Możliwość pobrania przefiltrowanych wydarzeń dla każdego zalogowanego użytkownika. Parametry: name-nazwa; place-miejsce, category-kategoria, onlyAvailable-dostępność, endDate-data końcowa, beginDate-data początkowa, size=liczba wydarzeń na jednej stronie, page-nr strony
 POST /api/wydarzenia | Dodanie wydarzenia - Możlowość dodania nowego wydarzenia przez przewodniczącego
 
 
