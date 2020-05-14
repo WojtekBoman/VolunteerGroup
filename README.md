@@ -55,6 +55,7 @@ POST /api//udzial/anuluj/{id-wydarzenia} | Anulowanie udziału w wydarzeniu - Mo
 |-|-|
 GET /api/oferty | Pobranie ofert - Możliwość pobrania wielu ofert dla każdego zalogowanego użytkownika
 GET /api/oferty/{id} | Pobranie oferty - Możliwość pobrania wybranej oferty dla każdego zalogowanego użytkownika
+GET /api/oferty/filtered | Pobranie przefiltrowanych ofert - Możliwość pobrania przefiltrowanych ofert dla każdego zalogowanego użytkownika. Parametry: name-imie; title-tytul oferty, size-liczba ofert na jednej stronie, page-nr strony
 POST /api/oferty | Dodanie oferty - Możlowość dodania nowej oferty przez pracownika schroniska
 
 ### Pracownik schroniska
