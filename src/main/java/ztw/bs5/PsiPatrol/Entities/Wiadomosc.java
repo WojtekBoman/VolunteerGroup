@@ -23,9 +23,31 @@ public class Wiadomosc {
     private Uzytkownik emailNadawcy;
 
     @Basic
-    @Column(name = "tresc_wiadomosci", nullable = false, length = 255)
-    private String trescWiadomosci;
+    @Column(name = "tresc", nullable = false, length = 500)
+    private String tresc;
 
+    @Basic
+    @Column(name = "temat", nullable = false, length = 50)
+    private String temat;
+
+    public Wiadomosc() {
+    }
+
+    public Wiadomosc(Uzytkownik emailAdresata, Uzytkownik emailNadawcy, String temat,String tresc) {
+        this.emailAdresata=emailAdresata;
+        this.emailNadawcy=emailNadawcy;
+        this.temat=temat;
+        this.tresc=tresc;
+    }
+
+
+    public String getTemat() {
+        return temat;
+    }
+
+    public void setTemat(String temat) {
+        this.temat = temat;
+    }
 
     public int getIdWiadomosci() {
         return idWiadomosci;
@@ -55,27 +77,28 @@ public class Wiadomosc {
     }
 
 
-    public String getTrescWiadomosci() {
-        return trescWiadomosci;
+    public String getTresc() {
+        return tresc;
     }
 
-    public void setTrescWiadomosci(String trescWiadomosci) {
-        this.trescWiadomosci = trescWiadomosci;
+    public void setTresc(String tresc) {
+        this.tresc = tresc;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Wiadomosc that = (Wiadomosc) o;
-        return idWiadomosci == that.idWiadomosci &&
-                Objects.equals(emailAdresata, that.emailAdresata) &&
-                Objects.equals(emailNadawcy, that.emailNadawcy) &&
-                Objects.equals(trescWiadomosci, that.trescWiadomosci);
+        Wiadomosc wiadomosc = (Wiadomosc) o;
+        return idWiadomosci == wiadomosc.idWiadomosci &&
+                emailAdresata.equals(wiadomosc.emailAdresata) &&
+                emailNadawcy.equals(wiadomosc.emailNadawcy) &&
+                Objects.equals(tresc, wiadomosc.tresc) &&
+                Objects.equals(temat, wiadomosc.temat);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idWiadomosci, emailAdresata, emailNadawcy, trescWiadomosci);
+        return Objects.hash(idWiadomosci, emailAdresata, emailNadawcy, tresc, temat);
     }
 }
