@@ -58,6 +58,15 @@ GET /api/oferty/{id} | Pobranie oferty - Możliwość pobrania wybranej oferty d
 GET /api/oferty/filtered | Pobranie przefiltrowanych ofert - Możliwość pobrania przefiltrowanych ofert dla każdego zalogowanego użytkownika. Parametry: name-imie; title-tytul oferty, size-liczba ofert na jednej stronie, page-nr strony
 POST /api/oferty | Dodanie oferty - Możlowość dodania nowej oferty przez pracownika schroniska
 
+### Wiadomość
+| Request| Opis |
+|-|-|
+GET /api/wiadomosci | Pobranie wiadomosci - Możliwość pobrania wszystkich wiadomosci
+GET /api/wiadomosci/{id} | Pobranie wiadomosci o danym id - Możliwość pobrania wiadomości o wskazanym id
+GET /api/wiadomosci/odebrane | Pobranie przychodzących wiadomości - Możlowość pobrania wszystkich wiadomości, dla których zalogowany jest adresatem
+GET /api/wiadomosci/wysłane | Pobranie wysłanych wiadomości - Możlowość pobrania wszystkich wiadomości, dla których zalogowany jest nadawcą
+POST /api/wiadomosci/wyslij/{email} | Wysłanie wiadomości - Możliwość wysłania wiadomości do wskazanego użytkownika
+
 ### Pracownik schroniska
 
 | Request| Opis |
