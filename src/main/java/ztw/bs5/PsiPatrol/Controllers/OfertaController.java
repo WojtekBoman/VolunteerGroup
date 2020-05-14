@@ -1,6 +1,9 @@
 package ztw.bs5.PsiPatrol.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,10 +12,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ztw.bs5.PsiPatrol.Entities.Oferta;
 import ztw.bs5.PsiPatrol.Entities.Pracownikschroniska;
-import ztw.bs5.PsiPatrol.Entities.Wydarzenie;
 import ztw.bs5.PsiPatrol.Repositories.OfertaRepository;
 import ztw.bs5.PsiPatrol.Repositories.PracownikschroniskaRepository;
-import ztw.bs5.PsiPatrol.Services.WolontariuszService;
+import ztw.bs5.PsiPatrol.Services.OfertaService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class OfertaController {
 
 
     @Autowired
-    private WolontariuszService wolontariuszService;
+    private OfertaService ofertaService;
 
     @Autowired
     private OfertaRepository ofertaRepository;
@@ -90,18 +92,40 @@ public class OfertaController {
         String email = auth.getName();
         Optional<Pracownikschroniska> prac = pracownikschroniskaRepository.findById(email);
 
-        if(prac.isPresent()){
-        Pracownikschroniska pracownik = prac.get();//isPresent
-        pracownik.setNazwaSchroniska(pracownikschroniska.getNazwaSchroniska());
-        return new ResponseEntity<>(pracownikschroniskaRepository.save(pracownik),HttpStatus.OK);
-        }else{
+        if (prac.isPresent()) {
+            Pracownikschroniska pracownik = prac.get();//isPresent
+            pracownik.setNazwaSchroniska(pracownikschroniska.getNazwaSchroniska());
+            return new ResponseEntity<>(pracownikschroniskaRepository.save(pracownik), HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
 
-
     }
 
+    @GetMapping("/oferty/filtered")
+    @PreAuthorize("hasRole('WOLONTARIUSZ') or hasRole('PRACOWNIK') or hasRole('PRZEWODNICZACY')")
+    public ResponseEntity<?> getFilteredOferty(@RequestParam(required = false, name = "name", defaultValue = "") String name,
+                                               @RequestParam(required = false, name = "title", defaultValue = "") String title,
+                                               Pageable pageable) {
+
+        try {
+            List<Oferta> oferty = new ArrayList<>(ofertaService.getFilteredOfertaList(title, name));
+
+            if (oferty.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            int start = (int) pageable.getOffset();
+            int end = (start + pageable.getPageSize()) > oferty.size() ? oferty.size() : (start + pageable.getPageSize());
+            Page<Oferta> pages = new PageImpl<>(oferty.subList(start, end), pageable, oferty.size());
+
+            return new ResponseEntity<>(pages, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 
 
 }
