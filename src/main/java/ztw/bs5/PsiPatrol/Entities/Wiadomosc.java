@@ -1,6 +1,9 @@
 package ztw.bs5.PsiPatrol.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -12,12 +15,12 @@ public class Wiadomosc {
     @Column(name = "id_wiadomosci", nullable = false)
     private int idWiadomosci;
 
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "email_adresata", nullable = false)
     private Uzytkownik emailAdresata;
 
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "email_nadawcy", nullable = false)
     private Uzytkownik emailNadawcy;
@@ -30,14 +33,21 @@ public class Wiadomosc {
     @Column(name = "temat", nullable = false, length = 50)
     private String temat;
 
+    @Basic
+    @Column(name = "data_wyslania", nullable = false)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+    private LocalDateTime dataWyslania;
+
+
     public Wiadomosc() {
     }
 
-    public Wiadomosc(Uzytkownik emailAdresata, Uzytkownik emailNadawcy, String temat,String tresc) {
-        this.emailAdresata=emailAdresata;
-        this.emailNadawcy=emailNadawcy;
-        this.temat=temat;
-        this.tresc=tresc;
+    public Wiadomosc(Uzytkownik emailAdresata, Uzytkownik emailNadawcy, String temat, String tresc, LocalDateTime dataWyslania) {
+        this.emailAdresata = emailAdresata;
+        this.emailNadawcy = emailNadawcy;
+        this.temat = temat;
+        this.tresc = tresc;
+        this.dataWyslania=dataWyslania;
     }
 
 
@@ -56,7 +66,6 @@ public class Wiadomosc {
     public void setIdWiadomosci(int idWiadomosci) {
         this.idWiadomosci = idWiadomosci;
     }
-
 
 
     public Uzytkownik getEmailAdresata() {
@@ -85,6 +94,15 @@ public class Wiadomosc {
         this.tresc = tresc;
     }
 
+
+    public LocalDateTime getDataWyslania() {
+        return dataWyslania;
+    }
+
+    public void setDataWyslania(LocalDateTime dataWyslania) {
+        this.dataWyslania = dataWyslania;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -94,11 +112,12 @@ public class Wiadomosc {
                 emailAdresata.equals(wiadomosc.emailAdresata) &&
                 emailNadawcy.equals(wiadomosc.emailNadawcy) &&
                 Objects.equals(tresc, wiadomosc.tresc) &&
-                Objects.equals(temat, wiadomosc.temat);
+                Objects.equals(temat, wiadomosc.temat) &&
+                Objects.equals(dataWyslania, wiadomosc.dataWyslania);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idWiadomosci, emailAdresata, emailNadawcy, tresc, temat);
+        return Objects.hash(idWiadomosci, emailAdresata, emailNadawcy, tresc, temat, dataWyslania);
     }
 }

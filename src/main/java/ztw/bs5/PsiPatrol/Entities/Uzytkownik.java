@@ -19,7 +19,7 @@ public class Uzytkownik {
     @Column(name = "email", nullable = false, length = 50)
     private String email;
 
-
+    @JsonIgnore
     @Column(name = "haslo", nullable = false, length = 255)
     private String haslo;
 

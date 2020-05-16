@@ -12,6 +12,8 @@ import ztw.bs5.PsiPatrol.Entities.Wiadomosc;
 import ztw.bs5.PsiPatrol.Repositories.UzytkownikRepository;
 import ztw.bs5.PsiPatrol.Repositories.WiadomoscRepository;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -111,11 +113,15 @@ public class WiadomoscController {
         Uzytkownik uzytkownikNadawca = uzytkNadawca.get();//isPresent
 
         Optional<Uzytkownik> uzytkAdresat = uzytkownikRepository.findByEmail(emailAdresat);
+        if(!uzytkAdresat.isPresent()){
+            return new ResponseEntity<>("Błędny mail adresata!", HttpStatus.BAD_REQUEST);
+        }
         Uzytkownik uzytkownikAdresat = uzytkAdresat.get();//isPresent
 
+        LocalDateTime dataWys = LocalDateTime.now();
 
         try {
-            Wiadomosc tempWiad = new Wiadomosc(uzytkownikAdresat, uzytkownikNadawca, wiadomosc.getTemat(),wiadomosc.getTresc());
+            Wiadomosc tempWiad = new Wiadomosc(uzytkownikAdresat, uzytkownikNadawca, wiadomosc.getTemat(),wiadomosc.getTresc(),dataWys);
            wiadomoscRepository.save(tempWiad);
 
             return new ResponseEntity<>("Wysłano pomyślnie!", HttpStatus.CREATED);
