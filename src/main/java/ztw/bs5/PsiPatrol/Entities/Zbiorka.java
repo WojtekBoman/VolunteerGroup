@@ -1,7 +1,11 @@
 package ztw.bs5.PsiPatrol.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -23,11 +27,13 @@ public class Zbiorka {
 
     @Basic
     @Column(name = "data_rozpoczecia", nullable = false)
-    private Date dataRozpoczecia;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate dataRozpoczecia;
 
     @Basic
     @Column(name = "data_zakonczenia", nullable = false)
-    private Date dataZakonczenia;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate dataZakonczenia;
 
     @Basic
     @Column(name = "kwota_potrzebna", nullable = false, precision = 0)
@@ -42,6 +48,16 @@ public class Zbiorka {
     @JoinColumn(name = "id_pracownika", nullable = false)
     private Pracownikschroniska idPracownika;
 
+    public Zbiorka() {
+    }
+    public Zbiorka(String tytul, String opis, LocalDate dataRozpoczecia, LocalDate dataZakonczenia, double kwotaPotrzebna) {
+        this.tytul=tytul;
+        this.opis=opis;
+        this.dataRozpoczecia=dataRozpoczecia;
+        this.dataZakonczenia=dataZakonczenia;
+        this.kwotaPotrzebna=kwotaPotrzebna;
+        this.kwotaZebrana=0;
+    }
 
     public int getIdZbiorki() {
         return idZbiorki;
@@ -70,20 +86,20 @@ public class Zbiorka {
     }
 
 
-    public Date getDataRozpoczecia() {
+    public LocalDate getDataRozpoczecia() {
         return dataRozpoczecia;
     }
 
-    public void setDataRozpoczecia(Date dataRozpoczecia) {
+    public void setDataRozpoczecia(LocalDate dataRozpoczecia) {
         this.dataRozpoczecia = dataRozpoczecia;
     }
 
 
-    public Date getDataZakonczenia() {
+    public LocalDate getDataZakonczenia() {
         return dataZakonczenia;
     }
 
-    public void setDataZakonczenia(Date dataZakonczenia) {
+    public void setDataZakonczenia(LocalDate dataZakonczenia) {
         this.dataZakonczenia = dataZakonczenia;
     }
 
