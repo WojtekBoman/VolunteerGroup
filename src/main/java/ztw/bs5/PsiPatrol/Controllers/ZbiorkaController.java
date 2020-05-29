@@ -110,6 +110,26 @@ public class ZbiorkaController {
 
     }
 
+    @PostMapping("/zbiorki/wplac")
+    @PreAuthorize("hasRole('WOLONTARIUSZ') or hasRole('PRACOWNIK') or hasRole('PRZEWODNICZACY')")
+    public ResponseEntity<Zbiorka> wlpacNaZbiorke(@RequestParam(name = "id", defaultValue = "") String id,
+                                                  @RequestParam(name = "kwota", defaultValue = "") String kwota) {
+
+        int convertedId = Integer.parseInt(id);
+        double convertedKwota = Double.parseDouble(kwota);
+        Optional<Zbiorka> zbiorkaOptional = zbiorkaRepository.findById(convertedId);
+        Zbiorka zbiorka = zbiorkaOptional.get();//isPresent
+        double kwotaToSave = zbiorka.getKwotaZebrana()+convertedKwota;
+
+        try {
+            zbiorka.setKwotaZebrana(kwotaToSave);
+            Zbiorka zbiorkaToSave = zbiorkaRepository.save(zbiorka);
+            return new ResponseEntity<>(zbiorkaToSave, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
 
 }
 
