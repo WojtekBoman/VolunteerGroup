@@ -67,6 +67,15 @@ GET /api/wiadomosci/odebrane | Pobranie przychodzących wiadomości - Możlowoś
 GET /api/wiadomosci/wysłane | Pobranie wysłanych wiadomości - Możlowość pobrania wszystkich wiadomości, dla których zalogowany jest nadawcą
 POST /api/wiadomosci/wyslij/{email} | Wysłanie wiadomości - Możliwość wysłania wiadomości do wskazanego użytkownika
 
+### Zbiórka
+
+| Request| Opis |
+|-|-|
+GET /api/zbiorki | Pobranie zbiórek - Możliwość pobrania wielu zbiórek dla zalogowanego użytkownika
+GET /api/zbiorki/{id} | Pobranie zbiórki - Możliwość pobrania wybranej zbiórki dla zalogowanego użytkownika
+GET /api/zbiorki/filtered | Pobranie przefiltrowanych zbiórek - Możliwość pobrania przefiltrowanych ofert dla zalogowanego użytkownika. Parametry: title-tytul zbórki, size-liczba ofert na jednej stronie, page-nr strony
+POST /api/zbiorki | Dodanie zbiorki - Możlowość dodania nowej zbiorki przez pracownika schroniska
+
 ### Pracownik schroniska
 
 | Request| Opis |
