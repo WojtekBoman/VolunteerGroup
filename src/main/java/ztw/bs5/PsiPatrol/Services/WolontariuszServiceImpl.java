@@ -1,6 +1,8 @@
 package ztw.bs5.PsiPatrol.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ztw.bs5.PsiPatrol.Entities.Uzytkownik;
 import ztw.bs5.PsiPatrol.Entities.Wolontariusz;
@@ -10,6 +12,7 @@ import ztw.bs5.PsiPatrol.Repositories.WolontariuszRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class WolontariuszServiceImpl implements WolontariuszService {
@@ -62,6 +65,14 @@ public class WolontariuszServiceImpl implements WolontariuszService {
     @Override
     public boolean isAssigned(Wolontariusz wolontariusz, Wydarzenie wydarzenie) {
         return wydarzenie.getWolontariusze().contains(wolontariusz);
+    }
+
+    @Override
+    public List<Wolontariusz> getMostActiveUsers(int usersNumber) {
+        List<Wolontariusz> wolontariuszList = new ArrayList<>(wolontariuszRepository.findAllByOrderByProcentowaAktywnoscDesc());
+        List<Wolontariusz> wolontariuszTopNList = wolontariuszList.stream().limit(usersNumber).collect(Collectors.toList());
+
+        return wolontariuszTopNList;
     }
 
 }

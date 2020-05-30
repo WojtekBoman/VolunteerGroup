@@ -12,4 +12,5 @@ public interface WolontariuszService {
      void updateWolonariszStats(Wolontariusz wolontariusz);
      void updateAllWolonariszStats();
      boolean isAssigned(Wolontariusz wolontariusz, Wydarzenie wydarzenie);
+     List<Wolontariusz> getMostActiveUsers(int usersNumber);
 }
