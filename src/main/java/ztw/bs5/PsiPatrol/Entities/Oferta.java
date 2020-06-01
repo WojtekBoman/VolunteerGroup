@@ -28,6 +28,10 @@ public class Oferta {
     @Column(name = "imie", nullable = false, length = 50)
     private String imie;
 
+    @Basic
+    @Column(name = "zdjecie", nullable = true, length = 255)
+    private String zdjecie;
+
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_pracownika", nullable = false)
@@ -41,6 +45,15 @@ public class Oferta {
         this.opis = opis;
         this.imie = imie;
     }
+
+    public Oferta(String tytul, String opis, String imie, String zdjecie) {
+        this.tytul = tytul;
+        this.opis = opis;
+        this.imie = imie;
+        this.zdjecie=zdjecie;
+    }
+
+
 
     public int getIdOferty() {
         return idOferty;
@@ -77,6 +90,13 @@ public class Oferta {
         this.imie = imie;
     }
 
+    public String getZdjecie() {
+        return zdjecie;
+    }
+
+    public void setZdjecie(String zdjecie) {
+        this.zdjecie = zdjecie;
+    }
 
     public Pracownikschroniska getIdPracownika() {
         return idPracownika;

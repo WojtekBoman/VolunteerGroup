@@ -20,6 +20,10 @@ public class Przewodniczacy extends Uzytkownik implements Serializable {
     @OneToMany(mappedBy = "idTworcy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Wydarzenie> wydarzenia;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "idAutora", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<News> newsy;
+
 
     public int getLiczbaZorganizowanychWyd() {
         return liczbaZorganizowanychWyd;
@@ -36,6 +40,14 @@ public class Przewodniczacy extends Uzytkownik implements Serializable {
 
     public void setWydarzenia(Set<Wydarzenie> wydarzenia) {
         this.wydarzenia = wydarzenia;
+    }
+
+    public Set<News> getNewsy() {
+        return newsy;
+    }
+
+    public void setNewsy(Set<News> newsy) {
+        this.newsy = newsy;
     }
 
     public Przewodniczacy() {

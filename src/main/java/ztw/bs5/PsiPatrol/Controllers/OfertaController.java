@@ -75,7 +75,7 @@ public class OfertaController {
 
 
         try {
-            Oferta tempOferta = new Oferta(oferta.getTytul(), oferta.getOpis(), oferta.getImie());
+            Oferta tempOferta = new Oferta(oferta.getTytul(), oferta.getOpis(), oferta.getImie(),oferta.getZdjecie());
             tempOferta.setIdPracownika(pracownikschroniska);
             Oferta ofertaToSave = ofertaRepository.save(tempOferta);
             return new ResponseEntity<>(ofertaToSave, HttpStatus.CREATED);

@@ -13,6 +13,7 @@
     <mapping class="ztw.bs5.PsiPatrol.Entities.Role"/>
       <mapping class="ztw.bs5.PsiPatrol.Entities.Udzial"/>
       <mapping class="ztw.bs5.PsiPatrol.Entities.Uzytkownik"/>
+    <mapping class="ztw.bs5.PsiPatrol.Entities.News"/>
       <mapping class="ztw.bs5.PsiPatrol.Entities.Wiadomosc"/>
       <mapping class="ztw.bs5.PsiPatrol.Entities.Wolontariusz"/>
       <mapping class="ztw.bs5.PsiPatrol.Entities.Wydarzenie"/>
