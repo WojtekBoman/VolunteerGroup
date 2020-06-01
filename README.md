@@ -75,10 +75,19 @@ GET /api/zbiorki | Pobranie zbiórek - Możliwość pobrania wielu zbiórek dla 
 GET /api/zbiorki/{id} | Pobranie zbiórki - Możliwość pobrania wybranej zbiórki dla zalogowanego użytkownika
 GET /api/zbiorki/filtered | Pobranie przefiltrowanych zbiórek - Możliwość pobrania przefiltrowanych ofert dla zalogowanego użytkownika. Parametry: title-tytul zbórki, size-liczba ofert na jednej stronie, page-nr strony
 POST /api/zbiorki | Dodanie zbiorki - Możlowość dodania nowej zbiorki przez pracownika schroniska
+POST /api/zbiorki/wplac | "Wpłata" na zbiórkę - Możlowość "wpłaty" środków na zbiórkę
 
 ### Pracownik schroniska
 
 | Request| Opis |
 |-|-|
 POST /api/nazwa-schroniska | Zmiana nazwy schroniska - Możlowość zmiany nazwy schroniska dla pracownika
+
+### Statystyki
+
+| Request| Opis |
+|-|-|
+GET /api/statystyki/aktywnosc/{liczba} | Pobranie aktywności wolontariuszy- Możliwość pobrania wybranej liczby najbardziej aktywnych wolontariuszy
+GET /api/statystyki/zbiorki/{rok} | Pobranie liczby zbiórek - Możliwość pobrania liczby zorganizowanych zbiórek wg miesięcy dla wybranego roku 
+GET /api/statystyki/wydarzenia/{rok} | Pobranie liczby wydarzeń - Możliwość pobrania liczby zorganizowanych wydarzeń wg miesięcy dla wybranego roku 
 
