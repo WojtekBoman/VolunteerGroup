@@ -33,7 +33,6 @@ public class NewsController {
     private PrzewodniczacyRepository przewodniczacyRepository;
 
     @GetMapping("/newsy")
-    @PreAuthorize("hasRole('WOLONTARIUSZ') or hasRole('PRACOWNIK') or hasRole('PRZEWODNICZACY')")
     public ResponseEntity<List<News>> getAllNewsy() {
         try {
             List<News> newsList = new ArrayList<>(newsRepository.findAll());
@@ -50,7 +49,6 @@ public class NewsController {
     }
 
     @GetMapping("/newsy/{id}")
-    @PreAuthorize("hasRole('WOLONTARIUSZ') or hasRole('PRACOWNIK') or hasRole('PRZEWODNICZACY')")
     public ResponseEntity<News> getNewsById(@PathVariable("id") int id) {
         Optional<News> newsOptional = newsRepository.findById(id);
 
@@ -82,7 +80,6 @@ public class NewsController {
     }
 
     @GetMapping("/newsy/filtered")
-    @PreAuthorize("hasRole('WOLONTARIUSZ') or hasRole('PRACOWNIK') or hasRole('PRZEWODNICZACY')")
     public ResponseEntity<?> getFilteredNewsy(Pageable pageable) {
 
         try {
