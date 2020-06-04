@@ -14,6 +14,7 @@ import ztw.bs5.PsiPatrol.Entities.News;
 import ztw.bs5.PsiPatrol.Entities.Przewodniczacy;
 import ztw.bs5.PsiPatrol.Repositories.NewsRepository;
 import ztw.bs5.PsiPatrol.Repositories.PrzewodniczacyRepository;
+import ztw.bs5.PsiPatrol.Services.NewsService;
 
 
 import java.time.LocalDate;
@@ -27,6 +28,9 @@ import java.util.Optional;
 public class NewsController {
 
     @Autowired
+    private NewsService newsService;
+
+    @Autowired
     private NewsRepository newsRepository;
 
     @Autowired
@@ -35,7 +39,7 @@ public class NewsController {
     @GetMapping("/newsy")
     public ResponseEntity<List<News>> getAllNewsy() {
         try {
-            List<News> newsList = new ArrayList<>(newsRepository.findAll());
+            List<News> newsList = new ArrayList<>(newsService.getSortedNewses());
 
             if (newsList.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -83,7 +87,7 @@ public class NewsController {
     public ResponseEntity<?> getFilteredNewsy(Pageable pageable) {
 
         try {
-            List<News> newsList = new ArrayList<>(newsRepository.findAll());
+            List<News> newsList = new ArrayList<>(newsService.getSortedNewses());
 
             if (newsList.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
