@@ -91,3 +91,11 @@ GET /api/statystyki/aktywnosc/{liczba} | Pobranie aktywności wolontariuszy- Mo�
 GET /api/statystyki/zbiorki/{rok} | Pobranie liczby zbiórek - Możliwość pobrania liczby zorganizowanych zbiórek wg miesięcy dla wybranego roku 
 GET /api/statystyki/wydarzenia/{rok} | Pobranie liczby wydarzeń - Możliwość pobrania liczby zorganizowanych wydarzeń wg miesięcy dla wybranego roku 
 
+
+### News
+
+| Request| Opis |
+|-|-|
+GET /api/newsy | Pobranie newsów - Możliwość pobrania wielu newsów dla każdego użytkownika
+GET /api/newsy/{id} | Pobranie newsa - Możliwość pobrania wybranego newsa dla każdego użytkownika
+POST /api/newsy | Dodanie newsa - Możlowość dodania nowego newsa przez przewodniczącego
